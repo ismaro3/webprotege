@@ -68,13 +68,15 @@ public class ProjectDownloadServlet extends HttpServlet {
                     formatAddr(req),
                     downloadParameters.getProjectId());
 
-        if (!accessManager.hasPermission(Subject.forUser(userId),
+        //No access required
+      /*  if (!accessManager.hasPermission(Subject.forUser(userId),
                                          new ProjectResource(downloadParameters.getProjectId()),
                                          BuiltInAction.DOWNLOAD_PROJECT)) {
             logger.info("Denied download request as user does not have permission to download this project.");
             resp.sendError(HttpServletResponse.SC_FORBIDDEN);
         }
-        else if (downloadParameters.isProjectDownload()) {
+        else */
+        if (downloadParameters.isProjectDownload()) {
             startProjectDownload(resp, userId, downloadParameters);
         }
     }
