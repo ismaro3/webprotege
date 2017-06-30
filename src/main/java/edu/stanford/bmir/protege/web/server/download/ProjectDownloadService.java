@@ -3,9 +3,12 @@ package edu.stanford.bmir.protege.web.server.download;
 import com.google.common.base.Stopwatch;
 import com.google.common.util.concurrent.Striped;
 import edu.stanford.bmir.protege.web.server.app.ApplicationNameSupplier;
+import edu.stanford.bmir.protege.web.server.project.Project;
 import edu.stanford.bmir.protege.web.server.project.ProjectDetailsManager;
 import edu.stanford.bmir.protege.web.server.project.ProjectManager;
 import edu.stanford.bmir.protege.web.server.revision.HeadRevisionNumberFinder;
+import edu.stanford.bmir.protege.web.server.revision.Revision;
+import edu.stanford.bmir.protege.web.server.revision.RevisionManager;
 import edu.stanford.bmir.protege.web.shared.inject.ApplicationSingleton;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
 import edu.stanford.bmir.protege.web.shared.revision.RevisionNumber;
@@ -106,6 +109,13 @@ public class ProjectDownloadService {
                              downloadFormat,
                              downloadPath,
                              response);
+    }
+
+    public RevisionNumber getRevisionNumber(ProjectId projectId, UserId userId){
+        Project p = projectManager.getProject(projectId,userId);
+        RevisionManager revisionManager = p.getRevisionManager();
+        return revisionManager.getCurrentRevision();
+
     }
 
     private void createDownloadIfNecessary(@Nonnull UserId requester,
